@@ -1,0 +1,28 @@
+
+<div class="tp-container" *ngIf="flexiItems.length > 0; else elseNoContent">
+  <form (ngSubmit)="onSubmit()">
+   <div *ngFor= "let item of flexiItems">
+     <!-- We can improve it more by creating a separate inputText component -->
+      <mat-form-field *ngIf="item.type == 'TextField'" appearance="outline">
+        <mat-label>{{item.label}}</mat-label>
+        <input matInput placeholder="{{item.label}}" [value]="item.name" [(ngModel)]="formSelection.textName" name="item.name">
+      </mat-form-field>
+      <!-- We can improve it more by creating a separate DropDown component -->
+      <mat-form-field  *ngIf="item.type == 'DropDown'" appearance="outline">
+        <mat-label>{{item.label}}</mat-label>
+        <mat-select [(value)]="formSelection.dropDownSelected">
+          <mat-option *ngFor="let subItem of item.values" [value]="subItem">
+            {{subItem}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+  <div class="form-row">
+    <button type="submit" mat-raised-button>Save</button>
+  </div>
+</form>
+<div *ngIf="payLoad" class="form-row">
+    <strong>Saved the following values</strong><br>{{payLoad}}
+  </div>
+</div>
+<ng-template #elseNoContent><h1>No content is available in flexiConfig Items</h1>.</ng-template>
